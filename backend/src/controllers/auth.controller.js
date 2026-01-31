@@ -74,6 +74,86 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.register = async (req, res) => {
+  try {
+    const { name, email, password, passwordConfirm } = req.body;
+
+    // Validation
+    if (!name || !email || !password || !passwordConfirm) {
+      return res.status(400).json({
+        success: false,
+        message: "Semua field harus diisi",
+      });
+    }
+
+    if (password !== passwordConfirm) {
+      return res.status(400).json({
+        success: false,
+        message: "Password tidak cocok",
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "Password minimal 6 karakter",
+      });
+    }
+
+    // Check if email already exists
+    const emailCheck = await pool.query(
+      "SELECT id FROM users WHERE email = $1",
+      [email]
+    );
+
+    if (emailCheck.rows.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Email sudah terdaftar",
+      });
+    }
+
+    // Create new user
+    const result = await pool.query(
+      "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role",
+      [name, email, password, "user"]
+    );
+
+    // Generate JWT token
+    const user = result.rows[0];
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRY }
+    );
+
+    res.status(201).json({
+      success: true,
+      message: "Registrasi berhasil",
+      data: {
+        token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+      },
+    });
+  } catch (error) {
+    console.error("REGISTER ERROR:", error);
+    res.status(500).json({
+      success: false,
+      message: "Terjadi kesalahan saat registrasi",
+    });
+  }
+};
+
 exports.logout = async (req, res) => {
   try {
     res.status(200).json({

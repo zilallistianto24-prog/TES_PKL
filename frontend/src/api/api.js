@@ -36,6 +36,8 @@ apiClient.interceptors.response.use(
 // AUTH API
 // =====================
 export const authAPI = {
+  register: (name, email, password, passwordConfirm) =>
+    apiClient.post("/auth/register", { name, email, password, passwordConfirm }),
   login: (email, password) =>
     apiClient.post("/auth/login", { email, password }),
   logout: () => apiClient.post("/auth/logout"),

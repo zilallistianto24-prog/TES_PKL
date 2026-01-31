@@ -2,17 +2,20 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { authAPI } from "../api/api";
 import { useApp } from "../context/AppContext";
-import "./Login.css";
+import "./Register.css";
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
   const { login, setIsLoading } = useApp();
   const [formData, setFormData] = useState({
-    email: "admin@example.com",
-    password: "admin123",
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
   });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,30 +28,59 @@ export default function Login() {
     setIsLoading(true);
     setError("");
 
+    // Validation
+    if (formData.password.length < 6) {
+      setError("Password minimal 6 karakter");
+      setIsLoading(false);
+      return;
+    }
+
+    if (formData.password !== formData.passwordConfirm) {
+      setError("Password tidak cocok");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const response = await authAPI.login(formData.email, formData.password);
+      const response = await authAPI.register(
+        formData.name,
+        formData.email,
+        formData.password,
+        formData.passwordConfirm
+      );
       const { data } = response.data;
 
       login(data.user, data.token);
       navigate("/dashboard");
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Login gagal. Silakan coba lagi."
-      );
+      setError(err.response?.data?.message || "Registrasi gagal. Silakan coba lagi.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <div className="login-header">
+    <div className="register-container">
+      <div className="register-box">
+        <div className="register-header">
           <h1>📋 Task Manager</h1>
-          <p>Kelola tugas Anda dengan mudah</p>
+          <p>Buat akun baru untuk memulai</p>
         </div>
 
         <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Nama Lengkap</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Masukkan nama Anda"
+              required
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -71,7 +103,7 @@ export default function Login() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Masukkan password Anda"
+                placeholder="Minimal 6 karakter"
                 required
               />
               <button
@@ -84,15 +116,37 @@ export default function Login() {
             </div>
           </div>
 
+          <div className="form-group">
+            <label htmlFor="passwordConfirm">Konfirmasi Password</label>
+            <div className="password-field">
+              <input
+                id="passwordConfirm"
+                type={showPasswordConfirm ? "text" : "password"}
+                name="passwordConfirm"
+                value={formData.passwordConfirm}
+                onChange={handleChange}
+                placeholder="Masukkan password lagi"
+                required
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
+              >
+                {showPasswordConfirm ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
+          </div>
+
           {error && <div className="error-message">{error}</div>}
 
           <button type="submit" className="btn btn-primary">
-            Masuk
+            Daftar
           </button>
         </form>
 
-        <div className="register-link">
-          <p>Belum punya akun? <Link to="/register">Daftar di sini</Link></p>
+        <div className="login-link">
+          <p>Sudah punya akun? <Link to="/">Login di sini</Link></p>
         </div>
 
         <div className="demo-credentials">
@@ -106,5 +160,3 @@ export default function Login() {
     </div>
   );
 }
-
-

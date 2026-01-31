@@ -1,7 +1,40 @@
 const express = require("express");
 const router = express.Router();
-const { login, logout } = require("../controllers/auth.controller");
+const { login, register, logout } = require("../controllers/auth.controller");
 const authMiddleware = require("../middleware/authMiddleware");
+
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     summary: Register new user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: John Doe
+ *               email:
+ *                 type: string
+ *                 example: john@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *               passwordConfirm:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       201:
+ *         description: Registrasi berhasil
+ *       400:
+ *         description: Validation error
+ */
+router.post("/register", register);
 
 /**
  * @swagger
@@ -45,4 +78,5 @@ router.post("/login", login);
 router.post("/logout", authMiddleware(), logout);
 
 module.exports = router;
+
 
