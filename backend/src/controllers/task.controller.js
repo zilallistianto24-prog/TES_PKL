@@ -12,7 +12,6 @@ exports.getTasks = async (req, res) => {
         tasks.description,
         tasks.status,
         tasks.created_at,
-        tasks.updated_at,
         users.id as user_id,
         users.name AS user_name,
         users.email as user_email
@@ -48,7 +47,6 @@ exports.getTask = async (req, res) => {
         tasks.description,
         tasks.status,
         tasks.created_at,
-        tasks.updated_at,
         users.id as user_id,
         users.name AS user_name,
         users.email as user_email
