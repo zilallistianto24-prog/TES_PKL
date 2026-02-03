@@ -37,7 +37,6 @@
 - ✅ Dashboard layout with navigation tabs
 - ✅ Real-time status updates without page refresh
 - ✅ Form validation with error handling
-- ✅ Comprehensive Swagger API documentation
 - ✅ BFF service layer for business logic
 - ✅ Consistent API response contracts
 - ✅ Demo data initialization script
@@ -55,7 +54,6 @@
 - ✅ JWT authentication (jsonwebtoken v9.0.3)
 - ✅ CORS enabled (cors v2.8.6)
 - ✅ Bcryptjs available (bcryptjs v3.0.3)
-- ✅ Swagger documentation (swagger-ui-express v5.0.1)
 - ✅ Environment variables (dotenv v17.2.3)
 
 ### Frontend (React.js)
@@ -97,7 +95,6 @@ task-management-bff/
 │   │       └── db.js                        ✅ Database config
 │   ├── server.js                           ✅ Server entry
 │   ├── init-db.js                          ✅ DB initialization
-│   ├── swagger.js                          ✅ API docs
 │   ├── package.json                        ✅ Dependencies
 │   └── .env.example                        ✅ Config template
 │
@@ -238,7 +235,6 @@ task-management-bff/
 - ✅ Backend: `npm start`
 - ✅ Frontend: `npm run dev`
 - ✅ Database init: `npm run init`
-- ✅ Swagger docs: http://localhost:5000/api-docs
 - ✅ Frontend URL: http://localhost:5173
 - ✅ Demo data auto-loaded
 - ✅ No manual database setup needed

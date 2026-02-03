@@ -1,133 +1,228 @@
 .task-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 20px;
+  gap: 24px;
 }
 
 .empty-state {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 60px 20px;
-  color: #999;
+  padding: 80px 20px;
+  color: #94a3b8;
   font-size: 1.1em;
+  font-weight: 500;
 }
 
 .task-card {
   background: white;
-  border: 2px solid #f0f0f0;
-  border-radius: 10px;
-  padding: 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.task-card.deadline-warning {
+  border-color: #f59e0b;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.02) 0%, rgba(239, 68, 68, 0.02) 100%);
 }
 
 .task-card:hover {
-  border-color: #667eea;
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
-  transform: translateY(-4px);
+  border-color: #0891b2;
+  box-shadow: 0 12px 24px rgba(8, 145, 178, 0.15);
+  transform: translateY(-6px);
+}
+
+.deadline-alert {
+  background: linear-gradient(135deg, #fef3c7 0%, #fee2e2 100%);
+  border: 2px solid #f59e0b;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+  }
+}
+
+.alert-icon {
+  font-size: 1.2em;
+  flex-shrink: 0;
+}
+
+.alert-text {
+  font-weight: 700;
+  color: #92400e;
+  font-size: 0.95em;
 }
 
 .task-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .task-header h3 {
   margin: 0;
-  color: #333;
-  font-size: 1.1em;
+  color: #0f172a;
+  font-size: 1.15em;
   flex: 1;
   word-break: break-word;
+  font-weight: 700;
 }
 
 .task-status {
   display: inline-block;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 20px;
   color: white;
   font-size: 0.8em;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.task-status.pending {
+  background-color: #f59e0b;
+}
+
+.task-status.in_progress {
+  background-color: #0891b2;
+}
+
+.task-status.completed {
+  background-color: #10b981;
+}
+
+.task-status.cancelled {
+  background-color: #ef4444;
 }
 
 .task-description {
-  color: #666;
-  margin: 0 0 15px 0;
-  line-height: 1.5;
+  color: #64748b;
+  margin: 0 0 16px 0;
+  line-height: 1.6;
   font-size: 0.95em;
 }
 
 .task-info {
   display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #f0f0f0;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
   flex-wrap: wrap;
+  font-size: 0.9em;
 }
 
 .task-user,
-.task-date {
-  color: #666;
+.task-date,
+.task-deadline {
+  color: #64748b;
   font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.task-deadline {
+  font-weight: 700;
+}
+
+.deadline-overdue {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.deadline-today {
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+.deadline-urgent {
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+.deadline-soon {
+  color: #0891b2;
+  font-weight: 700;
+}
+
+.deadline-ok {
+  color: #64748b;
 }
 
 .task-actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
   margin-top: auto;
 }
 
 .status-select {
-  padding: 8px 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 6px;
+  padding: 10px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   font-size: 0.9em;
   cursor: pointer;
   flex: 1;
   min-width: 140px;
   transition: all 0.3s ease;
+  background: white;
+  color: #1e293b;
+  font-weight: 600;
 }
 
 .status-select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #0891b2;
 }
 
 .btn {
-  padding: 8px 12px;
+  padding: 10px 14px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9em;
   transition: all 0.3s ease;
 }
 
 .btn-edit {
-  background-color: #e3f2fd;
-  color: #1976d2;
+  background-color: #dbeafe;
+  color: #0369a1;
   flex: 1;
 }
 
 .btn-edit:hover {
-  background-color: #bbdefb;
+  background-color: #bfdbfe;
 }
 
 .btn-delete {
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: #fee2e2;
+  color: #991b1b;
   flex: 1;
 }
 
 .btn-delete:hover {
-  background-color: #ffcdd2;
+  background-color: #fecaca;
 }
 
 @media (max-width: 768px) {

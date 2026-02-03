@@ -11,13 +11,14 @@ exports.getTasks = async (req, res) => {
         tasks.title,
         tasks.description,
         tasks.status,
+        tasks.deadline,
         tasks.created_at,
         users.id as user_id,
         users.name AS user_name,
         users.email as user_email
       FROM tasks
       JOIN users ON tasks.user_id = users.id
-      ORDER BY tasks.created_at DESC
+      ORDER BY tasks.deadline ASC, tasks.created_at DESC
     `);
 
     return res.status(200).json({
@@ -46,6 +47,7 @@ exports.getTask = async (req, res) => {
         tasks.title,
         tasks.description,
         tasks.status,
+        tasks.deadline,
         tasks.created_at,
         users.id as user_id,
         users.name AS user_name,
@@ -81,7 +83,7 @@ exports.getTask = async (req, res) => {
 // =====================
 exports.createTask = async (req, res) => {
   try {
-    const { title, description, user_id } = req.body;
+    const { title, description, user_id, deadline } = req.body;
 
     if (!title || !user_id) {
       return res.status(400).json({
@@ -104,10 +106,10 @@ exports.createTask = async (req, res) => {
     }
 
     const result = await pool.query(
-      `INSERT INTO tasks (title, description, user_id, status) 
-       VALUES ($1, $2, $3, 'pending') 
-       RETURNING id, title, description, status, user_id`,
-      [title, description || null, user_id]
+      `INSERT INTO tasks (title, description, user_id, deadline, status) 
+       VALUES ($1, $2, $3, $4, 'pending') 
+       RETURNING id, title, description, status, deadline, user_id`,
+      [title, description || null, user_id, deadline || null]
     );
 
     return res.status(201).json({
@@ -130,7 +132,7 @@ exports.createTask = async (req, res) => {
 exports.updateTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, user_id } = req.body;
+    const { title, description, user_id, deadline } = req.body;
 
     if (!title) {
       return res.status(400).json({
@@ -155,10 +157,10 @@ exports.updateTask = async (req, res) => {
 
     const result = await pool.query(
       `UPDATE tasks 
-       SET title=$1, description=$2, user_id=COALESCE($3, user_id), updated_at=CURRENT_TIMESTAMP
-       WHERE id=$4 
-       RETURNING id, title, description, status, user_id, updated_at`,
-      [title, description || null, user_id || null, id]
+       SET title=$1, description=$2, user_id=COALESCE($3, user_id), deadline=$4, updated_at=CURRENT_TIMESTAMP
+       WHERE id=$5 
+       RETURNING id, title, description, status, deadline, user_id, updated_at`,
+      [title, description || null, user_id || null, deadline || null, id]
     );
 
     if (result.rows.length === 0) {

@@ -28,7 +28,6 @@ A full-stack Task Management application built with **Express.js (Backend)**, **
 - Beautiful, responsive UI with gradient design
 - Real-time status updates
 - Error handling and validation
-- Swagger API documentation
 - BFF service layer for business logic aggregation
 
 ## 🛠 Tech Stack
@@ -38,7 +37,6 @@ A full-stack Task Management application built with **Express.js (Backend)**, **
 - **PostgreSQL** database
 - **JWT** for authentication
 - **Bcryptjs** for password hashing
-- **Swagger** for API documentation
 
 ### Frontend
 - **React 19** with Vite
@@ -69,7 +67,6 @@ A full-stack Task Management application built with **Express.js (Backend)**, **
 │   │       └── bff.service.js
 │   ├── server.js                  # Server entry point
 │   ├── init-db.js                 # Database initialization
-│   ├── swagger.js                 # Swagger configuration
 │   ├── package.json
 │   └── .env.example
 │
@@ -143,7 +140,6 @@ A full-stack Task Management application built with **Express.js (Backend)**, **
    ```
 
    The server will run on `http://localhost:5000`
-   Swagger docs available at `http://localhost:5000/api-docs`
 
 ### Frontend Setup
 

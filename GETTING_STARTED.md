@@ -15,7 +15,6 @@ A robust REST API server with:
 - ✅ Task management (CRUD operations + status updates)
 - ✅ BFF service layer for business logic
 - ✅ Comprehensive error handling
-- ✅ Swagger API documentation
 - ✅ Database initialization script
 - ✅ Environment-based configuration
 
@@ -56,7 +55,6 @@ Properly structured with:
 - Form validation and error handling
 - Comprehensive documentation
 - Database initialization script
-- Swagger API documentation
 - BFF architectural pattern
 - Git repository with meaningful commits
 
@@ -308,7 +306,7 @@ More help in SETUP.md troubleshooting section.
 - **SETUP.md** - Complete setup guide with troubleshooting
 - **GITHUB_SETUP.md** - GitHub repository setup
 - **PROJECT_STATUS.md** - Detailed completion checklist
-- **Swagger Docs** - http://localhost:5000/api-docs
+
 
 ---
 

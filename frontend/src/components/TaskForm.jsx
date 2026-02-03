@@ -6,6 +6,7 @@ export default function TaskForm({ task, users, onSave, onCancel }) {
     title: task?.title || "",
     description: task?.description || "",
     user_id: task?.user_id || "",
+    deadline: task?.deadline || "",
   });
 
   const handleChange = (e) => {
@@ -21,6 +22,9 @@ export default function TaskForm({ task, users, onSave, onCancel }) {
     }
     onSave(formData);
   };
+
+  // Get today's date for minimum date input
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <form className="task-form" onSubmit={handleSubmit}>
@@ -54,6 +58,20 @@ export default function TaskForm({ task, users, onSave, onCancel }) {
               </option>
             ))}
           </select>
+        </div>
+      </div>
+
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="deadline">Tanggal Deadline</label>
+          <input
+            id="deadline"
+            type="date"
+            name="deadline"
+            value={formData.deadline}
+            onChange={handleChange}
+            min={today}
+          />
         </div>
       </div>
 

@@ -94,7 +94,6 @@ CREATE DATABASE task_management;
    **Expected output:**
    ```
    Server running on http://localhost:5000
-   Swagger on http://localhost:5000/api-docs
    ```
 
 ### Step 4: Frontend Setup
@@ -136,14 +135,7 @@ CREATE DATABASE task_management;
 
 ## ✅ Verification & Testing
 
-### 1. Check Backend APIs
-
-Visit Swagger documentation:
-```
-http://localhost:5000/api-docs
-```
-
-### 2. Access Frontend
+### 1. Access Frontend
 
 Open browser and navigate to:
 ```
@@ -185,7 +177,6 @@ task-management-bff/
 │   │   └── config/           # Database config
 │   ├── init-db.js           # Database initialization
 │   ├── server.js            # Server entry point
-│   ├── swagger.js           # API documentation
 │   ├── package.json
 │   └── .env.example
 │
